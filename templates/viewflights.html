@@ -1,0 +1,141 @@
+{% extends "basic.html" %}
+
+{% block script %}
+<script>
+function choose(airline, flightNum, depDate, depTime, status)
+{
+    document.getElementById("airline").setAttribute("value", airline);
+    document.getElementById("flightNum").setAttribute("value", flightNum);
+    document.getElementById("depDate").setAttribute("value", depDate);
+    document.getElementById("depTime").setAttribute("value", depTime);
+    document.getElementById("status").setAttribute("value", status);
+}
+function airportList(target)
+{
+const element = document.getElementById(target);
+element.setAttribute("list", "airport");
+element.setAttribute("placeholder", "Airport");
+document.getElementById(target+"Country").setAttribute("class", "invisible");
+}
+function cityList(target)
+{
+const element = document.getElementById(target);
+element.setAttribute("list", "city");
+element.setAttribute("placeholder", "City");
+document.getElementById(target+"Country").removeAttribute("class");
+}
+</script>
+{% endblock %}
+
+{% block body %}
+<h1>Flights of {{airline}}</h1>
+<form action="/viewflights" method="post">
+<label for="source">Source</label>
+	<br>
+	<input type="radio" id="depAirport" name="sourceType" value="airport"
+		   autocomplete="off" onclick="airportList('source')" checked>
+	<label for="depAirport">Airport</label>
+	<input type="radio" id="depCity" name="sourceType" value="city"
+		   autocomplete="off" onclick="cityList('source')">
+	<label for="depCity">City</label>
+	<br>
+	<input type="text" id="source" name="source" list="airport" placeholder="Airport" autocomplete="off">
+	<input type="text" id="sourceCountry" name="sourceCountry" list="country" placeholder="Country"
+		   class="invisible" autocomplete="off">
+	<br>
+	<label for="destination">Destination</label>
+	<br>
+	<input type="radio" id="arrAirport" name="destinationType" value="airport"
+		   onclick="airportList('destination')" checked autocomplete="off">
+	<label for="arrAirport">Airport</label>
+	<input type="radio" id="arrCity" name="destinationType" value="city"
+		   autocomplete="off" onclick="cityList('destination')">
+	<label for="arrCity">City</label>
+	<br>
+	<input type="text" id="destination" name="destination" list="airport" placeholder="Airport"
+		   autocomplete="off">
+	<input type="text" id="destinationCountry" name="destinationCountry" list="country" placeholder="Country"
+		   class="invisible" autocomplete="off">
+	<br>
+
+	<datalist id="airport">
+		{% for airport in airports %}
+		<option value="{{airport[0]}}"/>
+		{% endfor %}
+	</datalist>
+	<datalist id="city">
+		{% for airport in airports %}
+		<option value="{{airport[1]}}"/>
+		{% endfor %}
+	</datalist>
+	<datalist id="country">
+		{% for airport in airports %}
+		<option value="{{airport[2]}}"/>
+		{% endfor %}
+	</datalist>
+	<label for="start">Range of dates</label>
+	<br>
+	<input type="date" id="start" name="start">
+	<input type="date" id="end" name="end">
+	<br>
+	<input type="submit" value="View flights">
+</form>
+<form action="/manageflight" method="post">
+<br>
+{% if post %}
+<h2>Flights that meet the search input</h2>
+{% else %}
+<h2>Flights for the future 30 days</h2>
+{% endif %}
+<table>
+    <thead>
+        <tr>
+            <th>Airline Name</th>
+            <th>Flight Number</th>
+            <th>Departure Airport</th>
+            <th>Departure Date</th>
+            <th>Departure Time</th>
+            <th>Arrival Airport</th>
+            <th>Arrival Date</th>
+            <th>Arrival Time</th>
+            <th>Plane Airline</th>
+            <th>Plane ID</th>
+            <th>Base Price</th>
+            <th>Remaining Seats</th>
+			<th>Status</th>
+			<th>Average Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for flight in flights %}
+        <tr>
+            <td>{{flight[0]}}</td>
+            <td>{{flight[1]}}</td>
+            <td>{{flight[2]}}</td>
+            <td>{{flight[3]}}</td>
+            <td>{{flight[4]}}</td>
+            <td>{{flight[5]}}</td>
+            <td>{{flight[6]}}</td>
+            <td>{{flight[7]}}</td>
+            <td>{{flight[8]}}</td>
+            <td>{{flight[9]}}</td>
+            <td>{{flight[10]}}</td>
+            <td>{{flight[11]}}</td>
+			<td>{{flight[12]}}</td>
+			<td>{{flight[13]}}</td>
+            <td><input type="radio" name="flight" value="selected" autocomplete="off"
+                   onclick="choose('{{flight[0]}}', '{{flight[1]}}', '{{flight[3]}}', '{{flight[4]}}', '{{flight[12]}}')" required></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<input type="submit" name="submit" value="View Customers, Ratings, and Comments">
+<input type="submit" name="submit" value="Change Flight Status">
+<input type="text" name="airline" id="airline" class="invisible">
+<input type="text" name="flightNum" id="flightNum" class="invisible">
+<input type="text" name="depDate" id="depDate" class="invisible">
+<input type="text" name="depTime" id="depTime" class="invisible">
+<input type="text" name="status" id="status" class="invisible">
+</form>
+{% endblock %}

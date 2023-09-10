@@ -1,0 +1,34 @@
+{% extends "basic.html" %}
+
+{% block body %}
+<h1>View Earned Revenue</h1>
+<form action="/revenue" method="post">
+    <label for="start">Track spending in the range</label>
+    <br>
+    <input type="date" name="start" id="start" required>
+    <input type="date" name="end" id="end" max="{{curDate}}" required>
+    <br>
+    <input type="submit" value="Track spending">
+</form>
+{% if start and end %}
+<h3>${{tot}} Revenue has been earned from {{start}} to {{end}}</h3>
+{% else %}
+<h3>${{tot}} Revenue has been earned this year</h3>
+{% endif %}
+<table>
+    <thead>
+        <tr>
+            <th>Month</th>
+            <th>Revenue Earned</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for month in monthly %}
+        <tr>
+            <td>{{month[0]}}</td>
+            <td>${{month[1]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

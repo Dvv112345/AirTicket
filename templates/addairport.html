@@ -1,0 +1,28 @@
+{% extends "basic.html" %}
+
+{% block body %}
+<form action="/addairport" method="post">
+    <label for="name">Airport Name</label>
+    <br>
+    <input type="text" name="name" id="name" required>
+    <br>
+    <label for="city">City</label>
+    <br>
+    <input type="text" name="city" id="city" required>
+    <br>
+    <label for="country">Country</label>
+    <br>
+    <input type="text" name="country" id="country" required>
+    <br>
+    <label for="type">Airport Type</label>
+    <br>
+    <select name="type" id="type" required>
+        <option value="domestic">Domestic</option>
+        <option value="international">International</option>
+        <option value="both">Both</option>
+    </select>
+    <br>
+    <br>
+    <input type="submit" value="Add New Airport">
+</form>
+{% endblock %}

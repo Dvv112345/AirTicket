@@ -1,0 +1,54 @@
+{% extends "basic.html" %}
+
+{% block body %}
+<h1>You are going to purchase:</h1>
+{% if sourceFlight %}
+<h3>Flight {{sourceFlight[1]}} of {{sourceFlight[0]}} from {{sourceFlight[10]}} to {{sourceFlight[11]}}
+on {{sourceFlight[2]}} at {{sourceFlight[3]}} at the price {{sourcePrice}}</h3>
+{% endif %}
+{% if returnFlight %}
+<h3>Flight {{returnFlight[1]}} of {{returnFlight[0]}} from {{returnFlight[10]}} to {{returnFlight[11]}}
+    on {{returnFlight[2]}} at {{returnFlight[3]}} at the price {{returnPrice}}</h3>
+{% endif %}
+<h3>Total: {{sourcePrice + returnPrice}}</h3>
+
+<form action="/confirmpurchase" method="post">
+    <label for="cardType">Card Type</label>
+    <br>
+    <select id="cardType" name="cardType" required>
+        <option value="debit">Debit</option>
+        <option value="credit">Credit</option>
+    </select>
+    <br>
+    <label for="cardNum">Card Number</label>
+    <br>
+    <input type="number" id="cardNum" name="cardNum" required>
+    <br>
+    <label for="cardOwner">Card Owner</label>
+    <br>
+    <input type="text" id="cardOwner" name="cardOwner" required>
+    <br>
+    <label for="expM">Expiry Date (MM/YYYY)</label>
+    <br>
+    <input type="number" id="expM" name="expM" min="1" max="12" required>
+    <input type="number" id="expY" name="expY" required>
+    <br>
+    <br>
+    <input type="submit" value="Checkout">
+    {% if sourceFlight %}
+    <input type="text" name="sourceAirline" value="{{sourceFlight[0]}}" class="invisible">
+    <input type="text" name="sourceNum" value="{{sourceFlight[1]}}" class="invisible">
+    <input type="text" name="sourceDepDate" value="{{sourceFlight[2]}}" class="invisible">
+    <input type="text" name="sourceDepTime" value="{{sourceFlight[3]}}" class="invisible">
+    <input type="number" name="sourcePrice" value="{{sourcePrice}}" class="invisible">
+    {% endif %}
+    {% if returnFlight %}
+    <input type="text" name="returnAirline" value="{{returnFlight[0]}}" class="invisible">
+    <input type="text" name="returnNum" value="{{returnFlight[1]}}" class="invisible">
+    <input type="text" name="returnDepDate" value="{{returnFlight[2]}}" class="invisible">
+    <input type="text" name="returnDepTime" value="{{returnFlight[3]}}" class="invisible">
+    <input type="number" name="returnPrice" value="{{returnPrice}}" class="invisible">
+    {% endif %}
+</form>
+
+{% endblock %}

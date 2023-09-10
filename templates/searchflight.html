@@ -1,0 +1,126 @@
+{% extends "basic.html" %}
+
+{% block script %}
+<script>
+function choose(flight, airline, flightNum, depDate, depTime)
+{
+    if(flight == "source")
+    {
+        document.getElementById("airline").setAttribute("value", airline);
+        document.getElementById("flightNum").setAttribute("value", flightNum);
+        document.getElementById("depDate").setAttribute("value", depDate);
+        document.getElementById("depTime").setAttribute("value", depTime);
+    }
+    else
+    {
+        document.getElementById("returnAirline").setAttribute("value", airline);
+        document.getElementById("returnFlightNum").setAttribute("value", flightNum);
+        document.getElementById("returnDepDate").setAttribute("value", depDate);
+        document.getElementById("returnDepTime").setAttribute("value", depTime);
+    }
+}
+</script>
+{% endblock %}
+
+
+{% block body %}
+<form action="/purchase" method="post">
+<h1>Flights from {{source}} to {{destination}}</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Airline Name</th>
+            <th>Flight Number</th>
+            <th>Departure Airport</th>
+            <th>Departure Date</th>
+            <th>Departure Time</th>
+            <th>Arrival Airport</th>
+            <th>Arrival Date</th>
+            <th>Arrival Time</th>
+            <th>Plane Airline</th>
+            <th>Plane ID</th>
+            <th>Base Price</th>
+            <th>Remaining Seats</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for flight in flights %}
+        <tr>
+            <td>{{flight[0]}}</td>
+            <td>{{flight[1]}}</td>
+            <td>{{flight[2]}}</td>
+            <td>{{flight[3]}}</td>
+            <td>{{flight[4]}}</td>
+            <td>{{flight[5]}}</td>
+            <td>{{flight[6]}}</td>
+            <td>{{flight[7]}}</td>
+            <td>{{flight[8]}}</td>
+            <td>{{flight[9]}}</td>
+            <td>{{flight[10]}}</td>
+            <td>{{flight[11]}}</td>
+            {% if userType == "customer" %}
+            <td><input type="radio" name="sourceFlight" value="selected" autocomplete="off"
+                   onclick="choose('source', '{{flight[0]}}', '{{flight[1]}}', '{{flight[3]}}', '{{flight[4]}}')" required></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if tripType == "roundTrip" %}
+<h1>Flights from {{destination}} to {{source}}</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Airline Name</th>
+            <th>Flight Number</th>
+            <th>Departure Airport</th>
+            <th>Departure Date</th>
+            <th>Departure Time</th>
+            <th>Arrival Airport</th>
+            <th>Arrival Date</th>
+            <th>Arrival Time</th>
+            <th>Plane Airline</th>
+            <th>Plane ID</th>
+            <th>Base Price</th>
+            <th>Remaining Seats</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for flight in returnFlights %}
+        <tr>
+            <td>{{flight[0]}}</td>
+            <td>{{flight[1]}}</td>
+            <td>{{flight[2]}}</td>
+            <td>{{flight[3]}}</td>
+            <td>{{flight[4]}}</td>
+            <td>{{flight[5]}}</td>
+            <td>{{flight[6]}}</td>
+            <td>{{flight[7]}}</td>
+            <td>{{flight[8]}}</td>
+            <td>{{flight[9]}}</td>
+            <td>{{flight[10]}}</td>
+            <td>{{flight[11]}}</td>
+            {% if userType == "customer" %}
+            <td><input type="radio" name="returnFlight" value="selected" autocomplete="off"
+                   onclick="choose('return', '{{flight[0]}}', '{{flight[1]}}', '{{flight[3]}}', '{{flight[4]}}')" required></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+<br>
+{% if userType == "customer" %}
+<input type="submit" value="Proceed To Checkout">
+<input type="text" name="airline" id="airline" class="invisible">
+<input type="text" name="flightNum" id="flightNum" class="invisible">
+<input type="text" name="depDate" id="depDate" class="invisible">
+<input type="text" name="depTime" id="depTime" class="invisible">
+<input type="text" name="returnAirline" id="returnAirline" class="invisible">
+<input type="text" name="returnFlightNum" id="returnFlightNum" class="invisible">
+<input type="text" name="returnDepDate" id="returnDepDate" class="invisible">
+<input type="text" name="returnDepTime" id="returnDepTime" class="invisible">
+{% endif %}
+</form>
+{% endblock %}

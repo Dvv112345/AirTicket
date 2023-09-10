@@ -1,0 +1,39 @@
+{% extends "basic.html" %}
+
+{% block body %}
+<h1>Flights Status</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Airline Name</th>
+            <th>Flight Number</th>
+            <th>Departure Airport</th>
+            <th>Departure Date</th>
+            <th>Departure Time</th>
+            <th>Arrival Airport</th>
+            <th>Arrival Date</th>
+            <th>Arrival Time</th>
+            <th>Plane Airline</th>
+            <th>Plane ID</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for flight in flights %}
+        <tr>
+            <td>{{flight[0]}}</td>
+            <td>{{flight[1]}}</td>
+            <td>{{flight[10]}}</td>
+            <td>{{flight[2]}}</td>
+            <td>{{flight[3]}}</td>
+            <td>{{flight[11]}}</td>
+            <td>{{flight[4]}}</td>
+            <td>{{flight[5]}}</td>
+            <td>{{flight[8]}}</td>
+            <td>{{flight[9]}}</td>
+            <td>{{flight[7]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

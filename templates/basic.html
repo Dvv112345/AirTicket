@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang=language>
+	<head>
+		<title>Air Ticket Reservation</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+        {% block script %}
+        {% endblock %}
+	</head>
+	<body>
+        <header>
+            <nav>
+                <a href="/"><button>Home</button></a>
+                {% if userType == "" %}
+                    <a href="/login"><button>Login</button></a>
+                {% else %}
+                    <a href="/logout"><button>Logout</button></a>
+                    <a href="/login"><button>Switch Account</button></a>
+                    <br>
+                    {% if userType == "customer" %}
+                        <a href="/myflights"><button>View My Flights</button></a>
+                        <a href="/trackspending"><button>Track My Spending</button></a>
+                    {% else %}
+                        <a href="/viewflights"><button>View Flights</button></a>
+                        <a href="/createflights"><button>Create New Flights</button></a>
+                        <a href="/addairplane"><button>Add New Airplane</button></a>
+                        <a href="/addairport"><button>Add New Airport</button></a>
+                        <a href="/frequentcustomers"><button>View Frequent Customers</button></a>
+                        <a href="/report"><button>View Reports</button></a>
+                        <a href="/revenue"><button>View Earned Revenue</button></a>
+                    {% endif %}
+                <p><strong>Hello {{user}}</strong></p>
+                {% endif %}
+            </nav>
+        </header>
+        {% block body %}
+        {% endblock %}
+	</body>
+</html>

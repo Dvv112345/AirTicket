@@ -1,0 +1,47 @@
+{% extends "basic.html" %}
+
+{% block body %}
+<h1>Add New Airplane</h1>
+<h3>{{message}}</h3>
+<form action="/addairplane" method="post">
+    <label for="seats">Number of seats</label>
+    <br>
+    <input type="number" name="seats" id="seats" required>
+    <br>
+    <label for="manu">Manufacturer</label>
+    <br>
+    <input type="text" name="manu" id="manu" required>
+    <br>
+    <label for="dateBuilt">Date Built</label>
+    <br>
+    <input type="date" name="dateBuilt" id="dateBuilt" max="{{curDate}}" required>
+    <br>
+    <input type="submit" value="Add New Plane">
+    <br>
+    <br>
+</form>
+<table>
+    <thead>
+        <tr>
+            <th>Airline Name</th>
+            <th>Airplane ID</th>
+            <th>Number of seats</th>
+            <th>Manufacturer</th>
+            <th>Date Built</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for plane in planes %}
+        <tr>
+            <td>{{plane[0]}}</td>
+            <td>{{plane[1]}}</td>
+            <td>{{plane[2]}}</td>
+            <td>{{plane[3]}}</td>
+            <td>{{plane[4]}}</td>
+            <td>{{plane[5]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

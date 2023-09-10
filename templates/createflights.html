@@ -1,0 +1,61 @@
+{% extends "basic.html" %}
+
+{% block body %}
+<h1>Create New Flights</h1>
+<form action="/createflights" method="post">
+    <label for="flightNum">Flight Number</label>
+    <br>
+    <input type="number" name="flightNum" id="flightNum" required>
+    <br>
+    <label for="depAirport">Departure Airport</label>
+    <br>
+    <select name="depAirport" id="depAirport" required>
+        {% for airport in airports %}
+        <option value="{{airport[0]}}">{{airport[0]}}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="arrAirport">Arrival Airport</label>
+    <br>
+    <select name="arrAirport" id="arrAirport" required>
+        {% for airport in airports %}
+        <option value="{{airport[0]}}">{{airport[0]}}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="depDate">Departure Date</label>
+    <br>
+    <input type="date" name="depDate" id="depDate" required>
+    <br>
+    <label for="depTime">Departure Time</label>
+    <br>
+    <input type="time" name="depTime" id="depTime" required>
+    <br>
+    <label for="arrDate">Arrival Date</label>
+    <br>
+    <input type="date" name="arrDate" id="arrDate" required>
+    <br>
+    <label for="arrTime">Arrival Time</label>
+    <br>
+    <input type="time" name="arrTime" id="arrTime" required>
+    <br>
+    <label for="price">Base Price</label>
+    <br>
+    <input type="number" name="price" id="price" step="any" required>
+    <br>
+    <label for="planeAirline">Airline the Airplane Belongs to</label>
+    <br>
+    <select name="planeAirline" id="planeAirline" required>
+        {% for airline in airlines %}
+        <option value="{{airline}}">{{airline}}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="planeID">Plane ID</label>
+    <br>
+    <input type="number" name="planeID" id="planeID" required>
+    <br>
+    <br>
+    <input type="submit" value="Create New Flight">
+</form>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "basic.html" %}
+
+{% block script %}
+<script>
+	function customerLogin()
+	{
+	document.getElementById("usernameLabel").innerHTML = "Email";
+	document.getElementById("username").setAttribute("type", "email");
+	}
+	function staffLogin()
+	{
+	document.getElementById("usernameLabel").innerHTML = "Username";
+	document.getElementById("username").setAttribute("type", "text");
+	}
+</script>
+{% endblock %}
+
+{% block body%}
+<h1>Login</h1>
+{% if error %}
+    <p class="error">{{error}}</p>
+{% endif %}
+<form action="/login" method="post">
+    <input type="radio" id="customer" name="userType" value="customer"
+           autocomplete="off" onclick="customerLogin()" checked>
+    <label for="customer">Customer login</label>
+    <input type="radio" id="staff" name="userType" value="staff"
+           autocomplete="off" onclick="staffLogin()">
+    <label for="staff">Staff login</label>
+    <br>
+    <br>
+    <label id="usernameLabel" for="username">Email</label>
+    <br>
+    <input type="email" id="username" name="username" required>
+    <br>
+    <label for="password">Password</label>
+    <br>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <br>
+    <input type="submit" value="Login">
+</form>
+<br>
+<a href="/staffregister">Register as Staff</a>
+<br>
+<a href="/customerregister">Register as Customer</a>
+{% endblock %}

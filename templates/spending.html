@@ -1,0 +1,34 @@
+{% extends "basic.html" %}
+
+{% block body %}
+<h1>My Spending</h1>
+<form action="/trackspending" method="post">
+    <label for="start">Track spending in the range</label>
+    <br>
+    <input type="date" name="start" id="start" required>
+    <input type="date" name="end" id="end" max="{{curDate}}" required>
+    <br>
+    <input type="submit" value="Track spending">
+</form>
+{% if start and end %}
+<h3>You have spend ${{tot}} from {{start}} to {{end}}</h3>
+{% else %}
+<h3>You have spend ${{tot}} this year</h3>
+{% endif %}
+<table>
+    <thead>
+        <tr>
+            <th>Month</th>
+            <th>Monthly spending</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for month in monthly %}
+        <tr>
+            <td>{{month[0]}}</td>
+            <td>${{month[1]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

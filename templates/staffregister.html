@@ -1,0 +1,83 @@
+{% extends "basic.html" %}
+
+{% block script %}
+<script>
+    let phoneCount = 1;
+    let emailCount = 1;
+	function addPhone()
+	{
+	    const phones = document.getElementById("phones");
+        phones.appendChild(document.createElement("br"));
+        const newInput = document.createElement("input");
+        newInput.setAttribute("type", "tel");
+        newInput.setAttribute("name", "phone"+ phoneCount);
+        phones.appendChild(newInput);
+        phoneCount++;
+	}
+	function addEmail()
+	{
+        const emails = document.getElementById("emails");
+        emails.appendChild(document.createElement("br"));
+        const newInput = document.createElement("input");
+        newInput.setAttribute("type", "email");
+        newInput.setAttribute("name", "email"+ emailCount);
+        emails.appendChild(newInput);
+        emailCount++;
+	}
+</script>
+{% endblock %}
+
+{% block body%}
+<h1>Register as Staff</h1>
+{% if error %}
+<p class="error">{{error}}</p>
+{% endif %}
+<form action="/staffregister" method="post">
+    <label for="airline">Airline</label>
+	<br>
+	<select id="airline" name="airline" required>
+		{% for airline in airlines %}
+        <option value="{{airline}}">{{airline}}</option>
+		{% endfor %}
+    </select>
+	<br>
+    <label id="usernameLabel" for="username">Username (Case Insensitive)</label>
+    <br>
+    <input type="text" id="username" name="username" required>
+    <br>
+    <label for="password">Password (Case Sensitive)</label>
+    <br>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <label for="first">First Name</label>
+    <br>
+    <input type="text" id="first" name="first" required>
+    <br>
+    <label for="last">Last Name</label>
+    <br>
+    <input type="text" id="last" name="last" required>
+    <br>
+    <label for="dob">Date of Birth</label>
+    <br>
+    <input type="date" id="dob" name="dob" required>
+    <br>
+    <label for="phone">Phone Number</label>
+    <br>
+    <div id="phones">
+    <input type="tel" id="phone" name="phone" required>
+    </div>
+    <button type="button" onclick="addPhone()">Add Another Phone Number</button>
+    <br>
+    <br>
+    <label for="email">Email Address</label>
+    <br>
+    <div id="emails">
+    <input type="email" id="email" name="email" required>
+    </div>
+    <button type="button" onclick="addEmail()">Add Another Email Address</button>
+    <br>
+    <br>
+    <input type="submit" value="Register">
+</form>
+
+{% endblock %}

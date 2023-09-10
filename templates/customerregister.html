@@ -1,0 +1,65 @@
+{% extends "basic.html" %}
+
+{% block body%}
+<h1>Register as Customer</h1>
+{% if error %}
+<p class="error">{{error}}</p>
+{% endif %}
+<form action="/customerregister" method="post">
+    <label for="email">Email (Case Insensitive)</label>
+    <br>
+    <input type="text" id="email" name="email" required>
+    <br>
+    <label for="password">Password (Case Sensitive)</label>
+    <br>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <label for="name">Full Name</label>
+    <br>
+    <input type="text" id="name" name="name" required>
+    <br>
+    <label for="building">Building Number</label>
+    <br>
+    <input type="text" id="building" name="building" required>
+    <br>
+    <label for="street">Street</label>
+    <br>
+    <input type="text" id="street" name="street" required>
+    <br>
+    <label for="city">City</label>
+    <br>
+    <input type="text" id="city" name="city" required>
+    <br>
+    <label for="state">State</label>
+    <br>
+    <input type="text" id="state" name="state">
+    <br>
+    <label for="country">Country</label>
+    <br>
+    <input type="text" id="country" name="country" required>
+    <br>
+    <label for="phone">Phone Number</label>
+    <br>
+    <input type="tel" id="phone" name="phone" required>
+    <br>
+    <label for="passport">Passport Number</label>
+    <br>
+    <input type="text" id="passport" name="passport" required>
+    <br>
+    <label for="expiry">Passport Expiry Date</label>
+    <br>
+    <input type="date" id="expiry" name="expiry" required>
+    <br>
+    <label for="passportCountry">Passport Country</label>
+    <br>
+    <input type="text" id="passportCountry" name="passportCountry" required>
+    <br>
+    <label for="dob">Date of Birth</label>
+    <br>
+    <input type="date" id="dob" name="dob" required>
+    <br>
+    <br>
+    <input type="submit" value="Register">
+</form>
+
+{% endblock %}

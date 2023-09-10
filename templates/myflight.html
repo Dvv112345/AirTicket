@@ -1,0 +1,98 @@
+{% extends "basic.html" %}
+
+{% block body %}
+<h1>My flights</h1>
+<form action="/cancel" method="post">
+<h2>Future Flights</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Ticket ID</th>
+            <th>Airline Name</th>
+            <th>Flight Number</th>
+            <th>Departure Airport</th>
+            <th>Departure Date</th>
+            <th>Departure Time</th>
+            <th>Arrival Airport</th>
+            <th>Arrival Date</th>
+            <th>Arrival Time</th>
+            <th>Plane Airline</th>
+            <th>Plane ID</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for flight in flights %}
+        <tr>
+            <td>{{flight[0]}}</td>
+            <td>{{flight[1]}}</td>
+            <td>{{flight[2]}}</td>
+            <td>{{flight[3]}}</td>
+            <td>{{flight[4]}}</td>
+            <td>{{flight[5]}}</td>
+            <td>{{flight[6]}}</td>
+            <td>{{flight[7]}}</td>
+            <td>{{flight[8]}}</td>
+            <td>{{flight[9]}}</td>
+            <td>{{flight[10]}}</td>
+            <td>{{flight[11]}}</td>
+            <td><input type="radio" name="ticket" value="{{flight[0]}}" autocomplete="off" required></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<input type="submit" value="Cancel Selected Flight">
+</form>
+
+<form action="/rate" method="post">
+<h2>Past Flights</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Ticket ID</th>
+            <th>Airline Name</th>
+            <th>Flight Number</th>
+            <th>Departure Airport</th>
+            <th>Departure Date</th>
+            <th>Departure Time</th>
+            <th>Arrival Airport</th>
+            <th>Arrival Date</th>
+            <th>Arrival Time</th>
+            <th>Plane Airline</th>
+            <th>Plane ID</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for flight in pastFlights %}
+        <tr>
+            <td>{{flight[0]}}</td>
+            <td>{{flight[1]}}</td>
+            <td>{{flight[2]}}</td>
+            <td>{{flight[3]}}</td>
+            <td>{{flight[4]}}</td>
+            <td>{{flight[5]}}</td>
+            <td>{{flight[6]}}</td>
+            <td>{{flight[7]}}</td>
+            <td>{{flight[8]}}</td>
+            <td>{{flight[9]}}</td>
+            <td>{{flight[10]}}</td>
+            <td>{{flight[11]}}</td>
+            <td><input type="radio" name="ticket" value="{{flight[0]}}" autocomplete="off" required></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<label for="rating">Rating (1 to 10)</label>
+<br>
+<input type="number" min="1" max="10" name="rating" id="rating" required>
+<br>
+<label for="comment">Comment</label>
+<br>
+<textarea name="comment" id="comment" rows="2" cols="30" required></textarea>
+<br>
+<input type="submit" value="Give Feedback on Selected Flight">
+</form>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends "basic.html" %}
+
+{% block script %}
+<script>
+function enableReturn()
+{
+document.getElementById("return").style.visibility = "visible";
+document.getElementById("retDate").setAttribute("required", "");
+}
+function disableReturn()
+{
+document.getElementById("return").style.visibility = "hidden";
+document.getElementById("retDate").removeAttribute("required");
+}
+function airportList(target)
+{
+const element = document.getElementById(target);
+element.setAttribute("list", "airport");
+element.setAttribute("placeholder", "Airport");
+document.getElementById(target+"Country").setAttribute("class", "invisible");
+}
+function cityList(target)
+{
+const element = document.getElementById(target);
+element.setAttribute("list", "city");
+element.setAttribute("placeholder", "City");
+document.getElementById(target+"Country").removeAttribute("class");
+}
+</script>
+{% endblock %}
+
+{% block body %}
+<h1>Find Flights</h1>
+<form action="/searchflight" method="post">
+	<label for="source">Source</label>
+	<br>
+	<input type="radio" id="depAirport" name="sourceType" value="airport"
+		   autocomplete="off" onclick="airportList('source')" checked required>
+	<label for="depAirport">Airport</label>
+	<input type="radio" id="depCity" name="sourceType" value="city"
+		   autocomplete="off" onclick="cityList('source')">
+	<label for="depCity">City</label>
+	<br>
+	<input type="text" id="source" name="source" list="airport" placeholder="Airport" autocomplete="off" required>
+	<input type="text" id="sourceCountry" name="sourceCountry" list="country" placeholder="Country"
+		   class="invisible" autocomplete="off">
+	<br>
+	<label for="destination">Destination</label>
+	<br>
+	<input type="radio" id="arrAirport" name="destinationType" value="airport"
+		   onclick="airportList('destination')" checked autocomplete="off" required>
+	<label for="arrAirport">Airport</label>
+	<input type="radio" id="arrCity" name="destinationType" value="city"
+		   autocomplete="off" onclick="cityList('destination')">
+	<label for="arrCity">City</label>
+	<br>
+	<input type="text" id="destination" name="destination" list="airport" placeholder="Airport"
+		   autocomplete="off" required>
+	<input type="text" id="destinationCountry" name="destinationCountry" list="country" placeholder="Country"
+		   class="invisible" autocomplete="off">
+	<br>
+
+	<datalist id="airport">
+		{% for airport in airports %}
+		<option value="{{airport[0]}}"/>
+		{% endfor %}
+	</datalist>
+	<datalist id="city">
+		{% for airport in airports %}
+		<option value="{{airport[1]}}"/>
+		{% endfor %}
+	</datalist>
+	<datalist id="country">
+		{% for airport in airports %}
+		<option value="{{airport[2]}}"/>
+		{% endfor %}
+	</datalist>
+
+	<input type="radio" id="oneWay" name="tripType" value="oneWay"
+		   autocomplete="off" onclick="disableReturn()" required>
+	<label for="oneWay">One way</label>
+	<input type="radio" id="roundTrip" name="tripType" value="roundTrip"
+		   autocomplete="off" onclick="enableReturn()" checked required>
+	<label for="roundTrip">Round Trip</label>
+	<br>
+	<label for="depDate">Departure date: </label>
+	<input type="date" id="depDate" name="depDate" min="{{curDate}}" required>
+	<br>
+	<div id="return">
+	<label for="retDate">Return date: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+	<input type="date" id="retDate" name="retDate" min="{{curDate}}" required>
+	</div>
+	<br>
+	<input type="submit" value="Search flight">
+</form>
+
+<h1>Check Flight Status</h1>
+<form action="/checkstatus" method="post">
+	<label for="airline">Airline</label>
+	<br>
+	<input type="text" id="airline" name="airline" list="airlineList" autocomplete="off" required>
+	<datalist id="airlineList">
+		{% for airline in airlines %}
+		<option value="{{airline}}"/>
+		{% endfor %}
+	</datalist>
+	<br>
+	<label for="flight">Flight Number</label>
+	<br>
+	<input type="text" id="flight" name="flight" required>
+	<br>
+	<input type="radio" id="departure" name="dateType" value="departure" checked>
+	<label for="departure">Departure date</label>
+	<input type="radio" id="arrival" name="dateType" value="arrival">
+	<label for="arrival">Arrival date</label>
+	<br>
+	<input type="date" name="date" required>
+	<br>
+	<br>
+	<input type="submit" value="Check status">
+</form>
+{% endblock %}
