@@ -22,5 +22,4 @@ A web application for selling air tickets.
 * Add airports
 * View flight ratings
 * View frequent customers
-* View report
-View revenue
+* View report of revenue
